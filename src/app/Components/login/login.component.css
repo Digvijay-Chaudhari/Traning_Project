@@ -1,0 +1,17 @@
+.maindiv mat-card{
+    padding: 0px;
+}
+
+.login-form{
+    padding: 45px;
+}
+.login{
+    margin-top: 50%;
+}
+
+#loginbutton{
+    margin-top: 20px;
+    color: black;
+    background-color: chocolate;
+    border-radius: 25px;
+} 

@@ -1,0 +1,48 @@
+<app-manager-Nav></app-manager-Nav>
+<body>
+    <div class="container-fluid">
+      <!-- <div class="container-fluid" > -->
+    
+      <div class="container">
+            <div fxLayout="row " fxLayoutAlign="space-between center">
+                <button matTooltip="Add Book" type="button" mat-raised-button style="margin-top: 2%;" (click)="navigatepage()" > <mat-icon>add</mat-icon></button>
+                <div>
+                    <input type="text" [(ngModel)]="searchBox"><mat-icon>search</mat-icon>
+                </div>
+    
+            </div>
+            <div class="row"  style="text-align: center;" >
+                   <div class="col-md-3"  *ngFor="let request of RequestData | searchRequest:searchBox">
+                    <mat-card class="example-card"   style="margin-top: 20%; padding: auto;" >
+                        <mat-card-header>
+                          <div mat-card-avatar class="example-header-image"></div>
+                          <mat-card-title>{{request.purpose}}</mat-card-title><br>
+                          <mat-card-subtitle>{{request.plannedDate}}</mat-card-subtitle>
+                          <mat-icon  *ngIf="request.isApproved" style="float: right;">thumb_up</mat-icon>
+                          <mat-icon  *ngIf="request.isRejected"  style="float: right;">thumb_down</mat-icon>
+                        </mat-card-header>
+                        <img mat-card-image src="../../../assets/Images/party.jpg" alt="Photo of a Shiba Inu">
+                        <mat-card-content>
+                          <p style="font-style: oblique;
+                          font-weight: 100;">
+                            {{request.description}}
+                          </p>
+                          <div class="row">
+                          </div>
+                          <div class="row">
+                                <span>Approver:{{request.approver}}</span>
+                                <span>Estimated_amount:{{request.estimatedCost | currency:"INR"}}</span>
+                                <span>Advanced_amount:{{request.adancedAmount | currency:"INR"}}</span>
+                         </div>
+                        </mat-card-content>
+                        <mat-card-actions>
+                          <button matTooltip="Approve" *ngIf="!request.isApproved && !request.isRejected" mat-raised-button color="primary" [disabled]="request.isApproved"  (click)="approvRequest(request)">Approve</button>&nbsp;
+                          <button matTooltip="Reject" *ngIf="!request.isApproved && !request.isRejected" matTooltipClass="redToolTip" mat-raised-button color="warn" (click)="rejectRequest(request)">Reject</button>
+                          <button matTooltip="Reason" *ngIf="!request.isApproved && request.isRejected" matTooltipClass="redToolTip" mat-raised-button color="warn" (click)="openDialog(request)">Reason</button>
+                        </mat-card-actions>
+                      </mat-card>
+                   </div>
+            </div>
+        </div>
+    </div>
+    </body>

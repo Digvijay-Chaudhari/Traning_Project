@@ -1,0 +1,23 @@
+<mat-toolbar color="warn">
+    <mat-toolbar-row fxLayoutAlign="space-between center">
+        <div fxLayout="row-revers" fxLayoutAlign="space-around center" fxFlex="initial" style="margin: 10px;">
+            <img src="../../../../../assets/Images/logo-euromonitor-intl-color.png" alt="" height="50px" width="180px" routerLink="./landingpage">
+            <div *ngIf="!devicexs" fxFlex="grow" style="margin: 10px;">
+                <button mat-raised-button routerLink="/myrequest">My Request</button>
+                <button mat-raised-button routerLink="/viewhistory">View History</button>
+                <button mat-raised-button routerLink="/testing">Testing</button>
+            </div>
+        </div>
+        <div>
+            <span style="padding-right: 4rem;">hi {{user}}</span>
+            <mat-icon routerLink="/login">exit_to_app</mat-icon>
+        </div>
+    </mat-toolbar-row>
+
+
+    <mat-toolbar-row *ngIf="devicexs" fxLayoutAlign="space-between end">
+        <button mat-raised-button routerLink="/myrequest">My Request</button>
+        <button mat-raised-button routerLink="/viewhistory">View History</button>
+        <button mat-raised-button routerLink="/testing">Testing</button>
+    </mat-toolbar-row>
+</mat-toolbar>
