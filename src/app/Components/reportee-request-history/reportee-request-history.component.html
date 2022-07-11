@@ -1,0 +1,51 @@
+<app-manager-Nav></app-manager-Nav>
+<body>
+    <div class="container-fluid">
+      <!-- <div class="container-fluid" > -->
+    
+      <div class="container">
+            <div fxLayout="row " fxLayoutAlign="space-between center">
+                <button matTooltip="Add Book" type="button" mat-raised-button style="margin-top: 2%;"  disabled> <mat-icon>add</mat-icon></button>
+                <div>
+                    <input type="text" [(ngModel)]="searchBox"><mat-icon>search</mat-icon>
+                </div>
+    
+            </div>
+            <div class="row" style="text-align: center;margin-bottom:5px; border: 10px;">
+                   <div class="col-md-3"  *ngFor="let request of RequestData | searchRequest:searchBox | paginate: { itemsPerPage: 4, currentPage: p }">
+                    <mat-card class="example-card" >
+                        <mat-card-header>
+                          <div mat-card-avatar class="example-header-image"></div>
+                          <mat-card-title>{{request.purpose}}</mat-card-title><br>
+                          <mat-card-subtitle>{{request.requestDate | date : 'yyyy-MM-dd'}}</mat-card-subtitle>
+                          <mat-icon  *ngIf="request.requestStatus == 1" style="float: right;">thumb_up</mat-icon>
+                          <mat-icon  *ngIf="request.requestStatus == 2"  style="float: right;">thumb_down</mat-icon>
+                          <mat-icon  *ngIf="request.requestStatus == 3"  style="float: right;">fast_forward</mat-icon>
+                        </mat-card-header>
+                        <img mat-card-image src="../../../assets/Images/party.jpg" alt="Photo of a Shiba Inu">
+                        <mat-card-content>
+                          <p style="font-style: oblique;
+                          font-weight: 100;">
+                            {{request.description}}
+                          </p>
+                          <div class="row">
+                          </div>
+                          <div class="row">
+                            <span>Estimated_amount:{{request.estAmount | currency:"INR"}}</span>
+                            <span>Advanced_amount:{{request.advAmount | currency:"INR"}}</span>
+                         </div>
+                        </mat-card-content>
+                        <div style="margin-bottom: 10px;">
+                            <mat-card-actions>
+                                <button matTooltip="Reason" *ngIf="request.requestStatus == 2" matTooltipClass="redToolTip" mat-raised-button color="warn" (click)="openDialog(request.requestId)">Reason</button>
+                            </mat-card-actions>
+                          </div>
+                      </mat-card>
+                   </div>
+            </div>
+        </div>
+        <div>
+            <pagination-controls (pageChange)="p = $event" class="center"></pagination-controls>
+        </div>
+    </div>
+    </body>

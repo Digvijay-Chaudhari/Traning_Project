@@ -1,0 +1,33 @@
+<mat-toolbar style="color: rgb(14, 14, 15); background-color: rgb(127, 206, 255);">
+    <mat-toolbar-row fxLayoutAlign="space-between center">
+        <div fxLayout="row-revers" fxLayoutAlign="space-around center" fxFlex="initial" style="margin: 10px;">
+            <img src="../../../../../assets/Images/logo-euromonitor-intl-color.png" alt="" height="50px" width="180px"
+                routerLink="./landingpage">
+            <div fxFlex="grow" style="margin: 10px;">
+                <button mat-button [matMenuTriggerFor]="Personal">Personal</button>
+                <mat-menu #Personal="matMenu">
+                    <button mat-menu-item routerLink="/managerRequest">My Request</button>
+                    <button mat-menu-item routerLink="/managerRequestHistory">View History</button>
+                </mat-menu>
+                <button mat-button [matMenuTriggerFor]="Reportee">Team Request</button>
+                <mat-menu #Reportee="matMenu">
+                    <button mat-menu-item routerLink="/managerdashboard">Reportee Requests</button>
+                    <button mat-menu-item routerLink="/reporteeHistory">Reportee Requests History</button>
+                </mat-menu>
+                <button mat-button [matMenuTriggerFor]="Forworded">Forworded Requests</button>
+                <mat-menu #Forworded="matMenu">
+                    <button mat-menu-item routerLink="/forwardedRequests">Forwarded Requests</button>
+                    <button mat-menu-item routerLink="/forwardedRequesthistary">Forwarded Requests History</button>
+                </mat-menu>
+                
+                
+            </div>
+
+        </div>
+        <div>
+            <span style="padding-right: 4rem;">Hi {{user}}</span>
+            <mat-icon routerLink="/login">exit_to_app</mat-icon>
+        </div>
+    </mat-toolbar-row>
+</mat-toolbar>
+<router-outlet></router-outlet>

@@ -24,61 +24,70 @@ fdescribe('RequestService', () => {
     expect(requestService).toBeTruthy();
   });
 
-  it('Should get all requests', () => {
-
-    const MockRequestData = [
-      {id:2,purpose:"Movie",description:"Movie",approver:"Shubham",estimatedCost:4000,adancedAmount:1000,plannedDate:new Date("2022-03-17"),isApproved:false,isRejected:false,comment:null},
-      {id:3,purpose:"Outing",description:"Outing",approver:"Shantanu",estimatedCost:5000,adancedAmount:1000,plannedDate:new Date("2022-04-27"),isApproved:false,isRejected:false,comment:null},
-    ];
-
-    let response:any; 
-
-    requestService.getAllRequest().subscribe(res=>{
-      response=res;
-      expect(response).toEqual(MockRequestData);
-    })
-
-    const req = httpTestingController.expectOne('http://localhost:4200/BudgetData');
-    expect(req.request.method).toBe('GET');
-    req.flush(MockRequestData);
-    httpTestingController.verify();
-  })
 
   it('Should save request ',() =>{
 
     const MockRequestData =
-      {purpose:"Movie123",description:"Movie",approver:"Shubham",estimatedCost:4000,adancedAmount:1000,plannedDate:new Date("2022-03-17"),isApproved:false,isRejected:false,comment:null};
+    {
+      "requestId": 1001,
+      "userId": 101,
+      "managerId": 106,
+      "purpose": "Demo Purpose",
+      "description": "Demo description",
+      "estAmount": 5000,
+      "advAmount": 2000,
+      "requestDate": "2022-07-07T05:36:31.491Z",
+      "requestStatus": 0,
+      "comments": null,
+      "isDeleted": false
+    }
     
 
     requestService.saveRequest(MockRequestData).subscribe(req=>{
       expect(req).toBeTruthy();
-      console.log(req.estimatedCost);
-      expect(req.estimatedCost).toBe(4000);
+      console.log(req.description);
+      expect(req.description).toBe("Demo description");
     })
     
-    const req = httpTestingController.expectOne('http://localhost:4200/BudgetData');
+    const req = httpTestingController.expectOne('https://localhost:44381/api/RequestDetail');
     expect(req.request.method).toBe('POST');
     req.flush(MockRequestData);
     httpTestingController.verify();
 
   })
   
-  it('Should update request ',() =>{
 
-    const MockRequestData =
-      {purpose:"MovieUpdated",description:"Movie",approver:"Shubham",estimatedCost:4000,adancedAmount:1000,plannedDate:new Date("2022-03-17"),isApproved:false,isRejected:false,comment:null};
-    
+  it('Should getRequest By Id ',() =>{
 
-    requestService.updateRequest(MockRequestData,2).subscribe(req=>{
-      expect(req).toBeTruthy();
-      console.log(req.estimatedCost);
-      expect(req.estimatedCost).toBe(4000);
+    const MockRequestData = {
+      "requestId": 1001,
+      "userId": 101,
+      "managerId": 106,
+      "purpose": "dbdbbbbcb update 121",
+      "description": "bbbbzdbdeeeyy",
+      "estAmount": 104444,
+      "advAmount": 207575,
+      "requestDate": "2022-06-17T00:00:00",
+      "requestStatus": 2,
+      "comments": "sfsagasga eey hw",
+      "isDeleted": false,
+      "user": null,
+      "forwordedRequestDetails": []
+    };
+
+    let response:any;
+
+    requestService.getRequestById(1001).subscribe(res=>{
+      response = res;
+      expect(response).toBeTruthy();
+      console.log(response.requestStatus);
+      expect(response.requestStatus).toBe(2);
     })
-    
-    const req = httpTestingController.expectOne('http://localhost:4200/BudgetData/2');
-    expect(req.request.method).toBe('PUT');
-    req.flush(MockRequestData);
-    httpTestingController.verify();
+
+    const req = httpTestingController.expectOne('https://localhost:44381/api/RequestDetail/1001');
+       expect(req.request.method).toBe('GET');
+       req.flush(MockRequestData);
+       httpTestingController.verify();
 
   })
 

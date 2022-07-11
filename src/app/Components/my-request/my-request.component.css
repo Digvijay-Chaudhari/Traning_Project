@@ -29,3 +29,16 @@
   margin-right: 4px;
 
 }
+
+.center {position: absolute;
+  top: 95%;
+  left: 45%;
+  text-align: center;
+}
+
+.textLimit{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+

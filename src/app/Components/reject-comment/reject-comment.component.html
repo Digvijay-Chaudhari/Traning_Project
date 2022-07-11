@@ -1,0 +1,12 @@
+<app-manager-Nav></app-manager-Nav>
+<div class="container">
+<form class="example-form" (ngSubmit)="onFormSubmit(message.value)">
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>Reason for rejection</mat-label>
+      <input matInput #message maxlength="256" placeholder="Add Comment">
+      <mat-hint align="end">{{message.value.length}} / 256</mat-hint>
+    </mat-form-field>
+    <button mat-raised-button color="primary">Submit</button>&nbsp;
+    <button mat-raised-button color="warn" (click)="cancelRejection()">Cancel</button>
+  </form>
+</div>

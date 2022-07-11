@@ -4,6 +4,11 @@
 
 export const environment = {
   url:"http://localhost:4200/BudgetData",
+  requestUrl :"https://localhost:44381/api/RequestDetail/api/Requests",
+  loginUrl :"https://localhost:44381/api/Login",
+  userInfoUrl:"https://localhost:44381/api/UserInfo",
+  requestDetailUrl:"https://localhost:44381/api/RequestDetail",
+  frwdRequestUrl:"https://localhost:44381/api/ForwardedRequest",
   production: false
 };
 

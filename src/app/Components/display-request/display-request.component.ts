@@ -12,23 +12,38 @@ import { RequestService } from 'src/app/SharedModule/Services/request.service';
 })
 export class DisplayRequestComponent implements OnInit {
 
-  budgetRequest:BudgetData;
+  budgetRequest:any;
   requestData:FormGroup;
+  userID:any;
+  managerId!:any;
+  userInfo: any;
 
   constructor(private requestService:RequestService,private router:Router,private formBuilder:FormBuilder,private routers:ActivatedRoute,private toaster: ToastrService) { }
 
   ngOnInit(): void {
 
+    this.managerId = localStorage.getItem('managerId');
+    this.userID = localStorage.getItem('userId');
+    this.requestService.getUserInfoById(this.managerId).subscribe(res=>{
+        this.userInfo = res;
+        console.log(this.userInfo);
+        console.log(this.userInfo.userName);
+    });
+
+
     this.requestData = this.formBuilder.group({
-      id:[],
+      requestId:[],
+      userId:[this.userID],
+      managerId:[this.managerId],
       purpose:['',Validators.required],
       description:['',Validators.required],
-      approver:['',Validators.required],
-      estimatedCost:['',Validators.required],
-      adancedAmount:['',Validators.required],
-      plannedDate:['',Validators.required],
-      isApproved:[false],
-      isRejected:[false]
+     // approver:['',Validators.required],
+      estAmount:['',Validators.required],
+      advAmount:['',Validators.required],
+      requestDate:['',Validators.required],
+      requestStatus:[0],
+      comments:[null],
+      isDeleted:[false]
     })
 
     this.getRequest(this.routers.snapshot.params['id']);
@@ -44,22 +59,23 @@ export class DisplayRequestComponent implements OnInit {
   }
 
 
-  public attachRequest(request:BudgetData){
+  public attachRequest(request:any){
     this.requestData.patchValue({
-      id:request.id,
+      requestId:request.requestId,
       purpose:request.purpose,
       description:request.description,
-      approver:request.approver,
-      estimatedCost:request.estimatedCost,
-      adancedAmount:request.adancedAmount,
-      plannedDate:request.plannedDate,
-      isApproved:false,
-      isRejected:false
+      estAmount:request.estAmount,
+      advAmount:request.advAmount,
+      //requestDate:request.requestDate,
+      userId:this.userID,
+      managerId:this.managerId,
+      requestStatus:0,
+      isDeleted:false
     })
   }
 
-  public onFormSubmit(request:BudgetData){
-    this.requestService.updateRequest(request,request.id).subscribe(reponse=>{
+  public onFormSubmit(request:any){
+    this.requestService.updateRequest(request).subscribe(reponse=>{
           console.log(reponse);
           this.toaster.success('Data updated Succesfully');
           this.router.navigate(['/myrequest'])

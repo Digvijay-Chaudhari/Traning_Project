@@ -13,13 +13,14 @@ import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatDialogModule} from '@angular/material/dialog'; 
+import {MatMenuModule} from '@angular/material/menu';
 
 
 const MatModules =[
   MatButtonModule,MatButtonToggleModule,MatToolbarModule,
   MatSidenavModule,MatListModule,MatIconModule,
   MatSelectModule,MatInputModule,MatFormFieldModule,MatDividerModule,
-  MatTableModule,MatPaginatorModule,MatGridListModule,MatDialogModule
+  MatTableModule,MatPaginatorModule,MatGridListModule,MatDialogModule,MatMenuModule
 ];
 
 @NgModule({

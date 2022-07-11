@@ -12,38 +12,43 @@
     
             </div>
             <div class="row" style="text-align: center;margin-bottom:5px; border: 10px;">
-                   <div class="col-md-3"  *ngFor="let request of RequestData | searchRequest:searchBox">
+                   <div class="col-md-3"  *ngFor="let request of RequestData | searchRequest:searchBox | paginate: { itemsPerPage: 4, currentPage: p }">
                     <mat-card class="example-card" >
                         <mat-card-header>
                           <div mat-card-avatar class="example-header-image"></div>
                           <mat-card-title>{{request.purpose}}</mat-card-title><br>
-                          <mat-card-subtitle>{{request.plannedDate}}</mat-card-subtitle>
+                          <mat-card-subtitle>{{request.requestDate | date : 'yyyy-MM-dd'}}</mat-card-subtitle>
+                          <mat-icon  *ngIf="request.requestStatus == 0" style="float: right;">email</mat-icon>
+                          <mat-icon  *ngIf="request.requestStatus == 1" style="float: right;">thumb_up</mat-icon>
+                          <mat-icon  *ngIf="request.requestStatus == 2"  style="float: right;">thumb_down</mat-icon>
+                          <mat-icon  *ngIf="request.requestStatus == 3"  style="float: right;">fast_forward</mat-icon>
                         </mat-card-header>
                         <img mat-card-image src="../../../assets/Images/party.jpg" alt="Photo of a Shiba Inu">
                         <mat-card-content>
-                          <p style="font-style: oblique;
-                          font-weight: 100;">
-                            {{request.description}}
-                          </p>
                           <div class="row">
+                            <p class="textLimit">
+                              {{request.description}}
+                            </p>
                           </div>
                           <div class="row">
-                            <span>Approver:{{request.approver}}</span>
-                            <span>Estimated_amount:{{request.estimatedCost | currency:"INR"}}</span>
-                            <span>Advanced_amount:{{request.adancedAmount | currency:"INR"}}</span>
+                            <span>Estimated_amount:{{request.estAmount | currency:"INR"}}</span>
+                            <span>Advanced_amount:{{request.advAmount | currency:"INR"}}</span>
                          </div>
                         </mat-card-content>
                         <div style="margin-bottom: 10px;">
                           <mat-card-actions>
-                            <button matTooltip="Edit Book" *ngIf="!request.isApproved && !request.isRejected"  mat-raised-button color="primary" (click)="displayRequest(request.id)"><mat-icon >edit</mat-icon></button>&nbsp;
-                            <button matTooltip="Delete Book" *ngIf="!request.isApproved && !request.isRejected"  matTooltipClass="redToolTip" mat-raised-button color="warn" (click)="deleteRequest(request)" ><mat-icon >delete</mat-icon></button>
-                            <button matTooltip="Upload" *ngIf="request.isApproved && !request.isRejected" matTooltipClass="redToolTip" mat-raised-button style="background-color:green;">Upload</button>
-                            <button matTooltip="Reason" *ngIf="!request.isApproved && request.isRejected" matTooltipClass="redToolTip" mat-raised-button color="warn">Reason</button>
+                            <button matTooltip="Edit Book" *ngIf="request.requestStatus == 0"  mat-raised-button color="primary" (click)="displayRequest(request.requestId)"><mat-icon >edit</mat-icon></button>&nbsp;
+                            <button matTooltip="Delete Book" *ngIf="request.requestStatus == 0"  matTooltipClass="redToolTip" mat-raised-button color="warn" (click)="deleteRequest(request.requestId)" ><mat-icon >delete</mat-icon></button>
+                            <button matTooltip="Upload" *ngIf="request.requestStatus == 1" matTooltipClass="redToolTip" mat-raised-button style="background-color:green;">Upload</button>
+                            <button matTooltip="Reason" *ngIf="request.requestStatus == 2" matTooltipClass="redToolTip" mat-raised-button color="warn">Reason</button>
                           </mat-card-actions>
                         </div>
                       </mat-card>
                    </div>
             </div>
         </div>
+        <div>
+          <pagination-controls (pageChange)="p = $event" class="center"></pagination-controls>
+      </div>
     </div>
     </body>
